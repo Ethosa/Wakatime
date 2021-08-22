@@ -53,10 +53,12 @@ public class PieChart extends View {
         }
 
         for(Map.Entry<String, Number> entry : data.entrySet()) {
-            final float angle = current_angle + (360f * (float)entry.getValue() / max_value);
+            final float angle = 360*((float)entry.getValue() / max_value);
+            if (current_angle > 180f)
+                paint.setColor(Color.rgb(100, 222, 100));
             canvas.drawArc(0f, 0f, ratio, ratio,
-                           current_angle, angle, false, paint);
-            current_angle += angle + 10f;
+                           current_angle, angle, true, paint);
+            current_angle += angle;
         }
     }
 }
