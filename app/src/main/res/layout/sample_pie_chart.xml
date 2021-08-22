@@ -6,11 +6,6 @@
     <com.ethosa.wakatime.PieChart
         style="@style/Widget.Theme.Wakatime.MyView"
         android:layout_width="300dp"
-        android:layout_height="300dp"
-        android:paddingLeft="20dp"
-        android:paddingBottom="40dp"
-        app:exampleDimension="24sp"
-        app:exampleDrawable="@android:drawable/ic_menu_add"
-        app:exampleString="Hello, PieChart" />
+        android:layout_height="300dp" />
 
 </FrameLayout>
