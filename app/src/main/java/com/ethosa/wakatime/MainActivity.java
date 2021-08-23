@@ -1,44 +1,37 @@
 package com.ethosa.wakatime;
 
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
+
+import com.ethosa.wakatime.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {
+    private ActivityMainBinding binding;
     private SharedPreferences preferences;
-    private String api_key = "";
-
-    private LinearLayout background;
-    private EditText api_key_input;
-    private Button accept;
+    private String apiKey = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        background = findViewById(R.id.dialog_background);
-        api_key_input = findViewById(R.id.api_key_input);
-        accept = findViewById(R.id.accept_key);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+        preferences = getPreferences(MODE_PRIVATE);
 
         loadApiKey();
 
-        accept.setOnClickListener((view) ->
-                preferences.edit().putString("API_KEY", api_key_input.getText().toString()).apply()
+        binding.acceptKey.setOnClickListener((view) ->
+                preferences.edit().putString("API_KEY", binding.apiKeyInput.getText().toString()).apply()
         );
     }
 
     private void loadApiKey() {
-        preferences = getPreferences(MODE_PRIVATE);
-
-        if (!(preferences.contains("API_KEY"))) {
-            background.setVisibility(View.VISIBLE);
+        if (preferences.contains("API_KEY")) {
+            apiKey = preferences.getString("API_KEY", "");
         } else {
-            api_key = preferences.getString("API_KEY", "API_KEY");
+            binding.background.setVisibility(View.VISIBLE);
         }
     }
 }
