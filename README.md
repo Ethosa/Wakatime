@@ -4,4 +4,7 @@
     <a href="https://www.codefactor.io/repository/github/ethosa/wakatime">
         <img src="https://www.codefactor.io/repository/github/ethosa/wakatime/badge?s=a41881c4d5cac2a96e77d9d06676e8e9f3259be3" alt="CodeFactor" />
     </a>
+    <a href="https://wakatime.com/badge/github/Ethosa/WakatimeBot">
+        <img src="https://wakatime.com/badge/github/Ethosa/WakatimeBot.svg">
+    </a>
 </div>
