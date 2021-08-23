@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.HashMap;
@@ -15,23 +14,13 @@ public class PieChart extends View {
     private final Paint paint = new Paint();
     private HashMap<String, Number> data;
     private float space = 1f;
+    private float maxValue = 0f;
+    private float maxAngle = 0;
 
     public PieChart(Context context, HashMap<String, Number> data, float space) {
         super(context);
-        init();
-        this.data = data;
-        this.space = space;
-        setMinimumWidth(128);
-        setMinimumHeight(128);
-    }
-
-    public PieChart(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        init();
-    }
-
-    public PieChart(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
+        setSpace(space);
+        setData(data);
         init();
     }
 
@@ -49,21 +38,14 @@ public class PieChart extends View {
             return;
         }
         final float ratio = (getWidth()/getHeight())*(getWidth()+getHeight())/2;
-        float max_value = 0f;
-        float max_angle = 360f;
-        float current_angle = 0f;
-
-        for (Number val : data.values()) {
-            max_value += (float)val;
-            max_angle -= space;
-        }
+        float currentAngle = 0f;
 
         for(Number val : data.values()) {
-            final float angle = max_angle*((float)val / max_value);
+            final float angle = maxAngle*((float)val / maxValue);
             generateColor();
             canvas.drawArc(0f, 0f, ratio, ratio,   // View box
-                           current_angle, angle, true, paint);
-            current_angle += angle + space;
+                           currentAngle, angle, true, paint);
+            currentAngle += angle + space;
         }
     }
 
@@ -74,5 +56,16 @@ public class PieChart extends View {
                 r.nextInt(256) + 144,
                 r.nextInt(256) + 144
         ));
+    }
+
+    private void setData(HashMap<String, Number> data) {
+        for (Number val : data.values()) {
+            maxValue += (float)val;
+            maxAngle -= space;
+        }
+    }
+
+    private void setSpace(float value) {
+        space = value;
     }
 }
