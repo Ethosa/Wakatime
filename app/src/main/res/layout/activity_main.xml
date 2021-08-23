@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#2C3E50"
+    android:elevation="8dp"
     android:gravity="center_horizontal|center_vertical"
     android:orientation="vertical">
 
@@ -12,12 +13,14 @@
         android:id="@+id/dialog_background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
+        android:layout_margin="64dp"
         android:background="@drawable/dialog_corners"
+        android:elevation="8dp"
         android:gravity="center_horizontal|center_vertical"
         android:orientation="vertical"
-        android:padding="8dp"
-        android:visibility="gone">
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/dialog_text"
@@ -47,7 +50,9 @@
             android:id="@+id/accept_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
             android:background="@drawable/buttton"
+            android:elevation="2dp"
             android:padding="0dp"
             android:text="@string/accept"
             android:textColor="@color/white" />
