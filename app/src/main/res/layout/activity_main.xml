@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/background"
     android:layout_width="match_parent"
@@ -20,7 +21,7 @@
         android:orientation="vertical"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
-        android:visibility="visible">
+        android:visibility="invisible">
 
         <TextView
             android:id="@+id/dialog_text"
@@ -28,28 +29,35 @@
             android:layout_height="wrap_content"
             android:text="@string/please_enter_your_wakatime_api_key"
             android:textAlignment="center"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
-        <EditText
+        <android.support.design.widget.TextInputLayout
             android:id="@+id/api_key_input"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:autofillHints=""
-            android:backgroundTint="@color/teal_200"
-            android:ems="10"
+            android:layout_height="match_parent"
             android:hint="@string/api_key"
-            android:inputType="textPassword"
-            android:minHeight="48dp"
-            android:singleLine="true"
-            android:textAlignment="center"
-            android:textColor="@color/white"
             android:textColorHint="@color/gray_400"
-            tools:ignore="TextContrastCheck" />
+            app:passwordToggleEnabled="true"
+            app:passwordToggleTint="@color/white"
+            tools:passwordToggleDrawable="@drawable/ic_visibility_white_24dp">
+
+            <android.support.design.widget.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/teal_200"
+                android:hint="@string/api_key"
+                android:inputType="textPassword"
+                android:textColor="@color/white"
+                android:textColorHint="#00FFFFFF"
+                tools:ignore="TouchTargetSizeCheck,TextContrastCheck" />
+        </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/accept_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
             android:background="@drawable/buttton"
             android:elevation="2dp"

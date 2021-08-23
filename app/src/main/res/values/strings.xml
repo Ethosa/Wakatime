@@ -1,7 +1,9 @@
 <resources>
     <string name="app_name">Wakatime</string>
-    <string name="please_enter_your_wakatime_api_key">Please, enter your Wakatime API key.</string>
+    <string name="please_enter_your_wakatime_api_key">Please, enter your\nWakatime API key.</string>
     <string name="api_key">API KEY</string>
     <string name="button">Button</string>
     <string name="accept">Accept</string>
+    <string name="hint">hint</string>
+    <string name="title">чо тут написать</string>
 </resources>
