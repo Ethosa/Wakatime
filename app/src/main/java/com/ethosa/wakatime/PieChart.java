@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.HashMap;
@@ -13,18 +14,26 @@ import java.util.Random;
 public class PieChart extends View {
     private final Paint paint = new Paint();
     private HashMap<String, Number> data;
-    private float space = 1f;
+    private float space = 0.1f;
     private float maxValue = 0f;
     private float maxAngle = 0;
 
-    public PieChart(Context context, HashMap<String, Number> data, float space) {
+    public PieChart(Context context) {
         super(context);
-        setSpace(space);
-        setData(data);
-        init();
+        init(null, 0);
     }
 
-    private void init() {
+    public PieChart(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        init(attrs, 0);
+    }
+
+    public PieChart(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        init(attrs, defStyle);
+    }
+
+    private void init(AttributeSet attrs, int defStyle) {
         paint.setStrokeWidth(1f);
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
@@ -39,6 +48,9 @@ public class PieChart extends View {
         }
         final float ratio = (getWidth()/getHeight())*(getWidth()+getHeight())/2;
         float currentAngle = 0f;
+
+        System.out.println(maxAngle);
+        System.out.println(maxValue);
 
         for(Number val : data.values()) {
             final float angle = maxAngle*((float)val / maxValue);
@@ -58,14 +70,17 @@ public class PieChart extends View {
         ));
     }
 
-    private void setData(HashMap<String, Number> data) {
-        for (Number val : data.values()) {
+    public void setData(HashMap<String, Number> value) {
+        maxAngle = 360f;
+        for (Number val : value.values()) {
             maxValue += (float)val;
             maxAngle -= space;
         }
+        data = value;
+        invalidate();
     }
 
-    private void setSpace(float value) {
+    public void setSpace(float value) {
         space = value;
     }
 }
