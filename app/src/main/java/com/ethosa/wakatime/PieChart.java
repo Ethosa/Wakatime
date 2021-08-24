@@ -18,6 +18,7 @@ public class PieChart extends View {
     private float space = 0.1f;
     private float maxValue = 0f;
     private float maxAngle = 0;
+    private float rectSize = 32f;
 
     public PieChart(Context context) {
         super(context);
@@ -48,7 +49,6 @@ public class PieChart extends View {
         }
         final float size = Math.min(getWidth(), getHeight());
         final float rectSpace = 5f;
-        final float rectSize = 32f;
         float currentAngle = 0f;
         float i = 0;
 
@@ -78,7 +78,8 @@ public class PieChart extends View {
         ));
     }
 
-    public void setData(HashMap<String, Number> value) {
+    public void setData(HashMap<String, Number> value, float screenWidth) {
+        rectSize = screenWidth/32f;
         maxAngle = 360f;
         for (Number val : value.values()) {
             maxValue += (float)val;

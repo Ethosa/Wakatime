@@ -7,14 +7,11 @@ import android.view.View;
 
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
 
-import com.ethosa.wakatime.models.WakatimeStats;
-
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
     private SharedPreferences preferences;
     private String apiKey = "";
     private WakatimeAPI api;
-    private WakatimeStats stats;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +27,8 @@ public class MainActivity extends AppCompatActivity {
                     preferences.edit().putString("API_KEY", binding.apiKeyInput.getEditText()
                             .getText().toString()).apply();
                     binding.dialog.setVisibility(View.GONE);
-                    binding.scrollContainer.setVisibility(View.GONE);
                     binding.loadScreen.setVisibility(View.VISIBLE);
+                    binding.scrollContainer.setVisibility(View.GONE);
                     processStats();
                 }
         );

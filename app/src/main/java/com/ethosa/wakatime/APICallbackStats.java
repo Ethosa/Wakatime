@@ -1,5 +1,6 @@
 package com.ethosa.wakatime;
 
+import android.graphics.Point;
 import android.util.Log;
 
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
@@ -22,6 +23,9 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
     public void onSuccessful(WakatimeStats value) {
         api.loadUserPhoto(new APICallbackBitmap(activity, binding, api));
         activity.runOnUiThread(() -> {
+            final Point windowSize = new Point();
+            activity.getWindowManager().getDefaultDisplay().getSize(windowSize);
+
             HashMap<String, Number> languages = new HashMap<>();
             HashMap<String, Number> editors = new HashMap<>();
             HashMap<String, Number> operatingSystems = new HashMap<>();
@@ -30,9 +34,9 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
             value.data.editors.forEach(elem -> editors.put(elem.name, elem.total_seconds));
             value.data.operating_systems.forEach(elem -> operatingSystems.put(elem.name, elem.total_seconds));
 
-            binding.chartLanguages.setData(languages);
-            binding.chartEditors.setData(editors);
-            binding.chartOperatingSystems.setData(operatingSystems);
+            binding.chartLanguages.setData(languages, (float)windowSize.x);
+            binding.chartEditors.setData(editors, (float)windowSize.x);
+            binding.chartOperatingSystems.setData(operatingSystems, (float)windowSize.x);
         });
     }
 

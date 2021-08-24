@@ -160,7 +160,7 @@
                     <com.ethosa.wakatime.PieChart
                         android:id="@+id/chart_languages"
                         android:layout_width="match_parent"
-                        android:layout_height="225dp"
+                        android:layout_height="196dp"
                         android:layout_margin="0dp"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -197,7 +197,7 @@
                     <com.ethosa.wakatime.PieChart
                         android:id="@+id/chart_editors"
                         android:layout_width="match_parent"
-                        android:layout_height="225dp"
+                        android:layout_height="196dp"
                         android:layout_margin="0dp"
                         android:layout_weight="1" />
                 </LinearLayout>
@@ -234,7 +234,7 @@
                     <com.ethosa.wakatime.PieChart
                         android:id="@+id/chart_operating_systems"
                         android:layout_width="match_parent"
-                        android:layout_height="225dp"
+                        android:layout_height="196dp"
                         android:layout_margin="0dp"
                         android:layout_weight="1" />
                 </LinearLayout>
