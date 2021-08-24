@@ -22,9 +22,17 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
     public void onSuccessful(WakatimeStats value) {
         api.loadUserPhoto(new APICallbackBitmap(activity, binding, api));
         activity.runOnUiThread(() -> {
-            HashMap<String, Number> data = new HashMap<>();
-            value.data.languages.forEach(elem -> data.put(elem.name, elem.total_seconds));
-            binding.chartLanguages.setData(data);
+            HashMap<String, Number> languages = new HashMap<>();
+            HashMap<String, Number> editors = new HashMap<>();
+            HashMap<String, Number> operatingSystems = new HashMap<>();
+
+            value.data.languages.forEach(elem -> languages.put(elem.name, elem.total_seconds));
+            value.data.editors.forEach(elem -> editors.put(elem.name, elem.total_seconds));
+            value.data.operating_systems.forEach(elem -> operatingSystems.put(elem.name, elem.total_seconds));
+
+            binding.chartLanguages.setData(languages);
+            binding.chartEditors.setData(editors);
+            binding.chartOperatingSystems.setData(operatingSystems);
         });
     }
 

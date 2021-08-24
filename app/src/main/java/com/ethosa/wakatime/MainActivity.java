@@ -30,7 +30,9 @@ public class MainActivity extends AppCompatActivity {
                     preferences.edit().putString("API_KEY", binding.apiKeyInput.getEditText()
                             .getText().toString()).apply();
                     binding.dialog.setVisibility(View.GONE);
-                    binding.content.setVisibility(View.VISIBLE);
+                    binding.scrollContainer.setVisibility(View.GONE);
+                    binding.loadScreen.setVisibility(View.VISIBLE);
+                    processStats();
                 }
         );
     }
@@ -38,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
     private void loadApiKey() {
         if ((apiKey = preferences.getString("API_KEY", "")).equals("")) {
             binding.dialog.setVisibility(View.VISIBLE);
-            binding.content.setVisibility(View.GONE);
+            binding.scrollContainer.setVisibility(View.GONE);
         } else {
+            binding.scrollContainer.setVisibility(View.GONE);
+            binding.loadScreen.setVisibility(View.VISIBLE);
             processStats();
         }
     }

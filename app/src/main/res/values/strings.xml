@@ -6,4 +6,6 @@
     <string name="accept">Accept</string>
     <string name="avatar">Avatar</string>
     <string name="languages">Languages</string>
+    <string name="editors">Editors</string>
+    <string name="operating_systems">Operating systems</string>
 </resources>
