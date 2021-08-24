@@ -42,10 +42,10 @@ public class PieChart extends View {
 
     @Override
     protected void onDraw(Canvas canvas) {
-        super.onDraw(canvas);
         if (data == null) {
             return;
         }
+        super.onDraw(canvas);
         final float ratio = (getWidth()/getHeight())*(getWidth()+getHeight())/2;
         float currentAngle = 0f;
 
@@ -79,5 +79,6 @@ public class PieChart extends View {
 
     public void setSpace(float value) {
         space = value;
+        invalidate();
     }
 }
