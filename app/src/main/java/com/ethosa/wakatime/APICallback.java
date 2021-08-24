@@ -1,10 +1,6 @@
 package com.ethosa.wakatime;
 
-import com.ethosa.wakatime.models.WakatimeStats;
-
-import java.io.IOException;
-
-public interface APICallback {
-    void onSuccessful(WakatimeStats jsonObject);
-    void onFailure(IOException e);
+public interface APICallback<T> {
+    void onSuccessful(T value);
+    void onFailure(Exception e);
 }
