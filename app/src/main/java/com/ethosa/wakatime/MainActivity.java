@@ -1,6 +1,8 @@
 package com.ethosa.wakatime;
 
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -48,18 +50,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void processStats() {
-        api.getStats(apiKey, new APICallback() {
-            @Override
-            public void onSuccessful(WakatimeStats jsonObject) {
-                runOnUiThread(() -> {
-                    stats = jsonObject;
-                });
-            }
-
-            @Override
-            public void onFailure(IOException e) {
-                Log.e(WakatimeAPI.getTag(), "error", e);
-            }
-        });
+        api.getStats(apiKey, new APICallbackStats(this, binding, api));
     }
 }
