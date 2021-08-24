@@ -1,8 +1,10 @@
 package com.ethosa.wakatime;
 
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Type;
 
 import okhttp3.Call;
@@ -11,6 +13,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 import com.ethosa.wakatime.models.WakatimeStats;
+import com.ethosa.wakatime.models.WakatimeUser;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -21,11 +24,14 @@ public class WakatimeAPI {
     private static final String URL = "https://wakatime.com/api/v1/";
     private static final String TAG = "Wakatime API";
 
+    private WakatimeUser userInfo;
+
     public WakatimeAPI() {
         client = new OkHttpClient();
     }
 
-    public void getStats(String apiKey, APICallback callback) {
+    public void getStats(String apiKey, APICallbackStats callback) {
+        loadUserInfo(apiKey);
         Request request = new Request.Builder()
                 .url(URL + "users/current/stats/last_7_days?api_key=" + apiKey)
                 .build();
@@ -42,8 +48,49 @@ public class WakatimeAPI {
                 final String jsonString = response.body().string();
                 GsonBuilder builder = new GsonBuilder();
                 builder.serializeNulls();
-                final Gson jsonObject = builder.create();
-                callback.onSuccessful(jsonObject.fromJson(jsonString, (Type)WakatimeStats.class));
+                final Gson gson = builder.create();
+                callback.onSuccessful(gson.fromJson(jsonString, (Type)WakatimeStats.class));
+            }
+        });
+    }
+
+    public void loadUserInfo(String apiKey) {
+        Request request = new Request.Builder()
+                .url(URL + "users/current?api_key=" + apiKey)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                call.cancel();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                final String jsonString = response.body().string();
+                GsonBuilder builder = new GsonBuilder();
+                builder.serializeNulls();
+                final Gson gson = builder.create();
+                userInfo = gson.fromJson(jsonString, (Type)WakatimeUser.class);
+            }
+        });
+    }
+
+    public void loadUserPhoto(APICallbackBitmap callback) {
+        Request request = new Request.Builder()
+                .url(userInfo.data.photo)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callback.onFailure(e);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                InputStream stream = response.body().byteStream();
+                callback.onSuccessful(BitmapFactory.decodeStream(stream));
             }
         });
     }
