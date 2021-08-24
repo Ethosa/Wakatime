@@ -8,3 +8,7 @@
         <img src="https://wakatime.com/badge/github/Ethosa/WakatimeBot.svg">
     </a>
 </div>
+
+| Emulator | Phone |
+| :---:    | :---: |
+|![Emulator](https://github.com/Ethosa/Wakatime/blob/master/screenshots/one.png)|![Phone](https://github.com/Ethosa/Wakatime/blob/master/screenshots/two.jpg)|
