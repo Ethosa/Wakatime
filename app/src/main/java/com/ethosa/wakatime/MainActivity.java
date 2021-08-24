@@ -1,18 +1,13 @@
 package com.ethosa.wakatime;
 
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
 
 import com.ethosa.wakatime.models.WakatimeStats;
-
-import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;

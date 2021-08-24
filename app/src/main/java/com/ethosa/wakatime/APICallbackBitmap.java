@@ -9,16 +9,19 @@ import com.ethosa.wakatime.databinding.ActivityMainBinding;
 public class APICallbackBitmap implements APICallback<Bitmap> {
     final private ActivityMainBinding binding;
     private MainActivity activity;
+    private  WakatimeAPI api;
 
-    public APICallbackBitmap(MainActivity ctx, ActivityMainBinding value){
+    public APICallbackBitmap(MainActivity ctx, ActivityMainBinding value, WakatimeAPI apiObj){
         binding = value;
         activity = ctx;
+        api = apiObj;
     }
 
     @Override
     public void onSuccessful(Bitmap value) {
         activity.runOnUiThread(() -> {
             binding.avatar.setImageDrawable(new BitmapDrawable(activity.getResources(), value));
+            binding.username.setText(api.userInfo.data.username);
         });
     }
 

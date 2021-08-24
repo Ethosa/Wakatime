@@ -1,6 +1,5 @@
 package com.ethosa.wakatime;
 
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
 import java.io.IOException;
@@ -24,7 +23,7 @@ public class WakatimeAPI {
     private static final String URL = "https://wakatime.com/api/v1/";
     private static final String TAG = "Wakatime API";
 
-    private WakatimeUser userInfo;
+    public WakatimeUser userInfo;
 
     public WakatimeAPI() {
         client = new OkHttpClient();

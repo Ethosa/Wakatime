@@ -18,7 +18,7 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
 
     @Override
     public void onSuccessful(WakatimeStats value) {
-        api.loadUserPhoto(new APICallbackBitmap(activity, binding));
+        api.loadUserPhoto(new APICallbackBitmap(activity, binding, api));
     }
 
     @Override
