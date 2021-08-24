@@ -20,20 +20,20 @@ public class PieChart extends View {
 
     public PieChart(Context context) {
         super(context);
-        init(null, 0);
+        init();
     }
 
     public PieChart(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(attrs, 0);
+        init();
     }
 
     public PieChart(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
-        init(attrs, defStyle);
+        init();
     }
 
-    private void init(AttributeSet attrs, int defStyle) {
+    private void init() {
         paint.setStrokeWidth(1f);
         paint.setStyle(Paint.Style.FILL);
         paint.setAntiAlias(true);
@@ -48,9 +48,6 @@ public class PieChart extends View {
         }
         final float ratio = (getWidth()/getHeight())*(getWidth()+getHeight())/2;
         float currentAngle = 0f;
-
-        System.out.println(maxAngle);
-        System.out.println(maxValue);
 
         for(Number val : data.values()) {
             final float angle = maxAngle*((float)val / maxValue);
