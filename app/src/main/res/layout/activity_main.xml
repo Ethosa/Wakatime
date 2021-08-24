@@ -79,6 +79,15 @@
             android:id="@+id/pie"
             android:layout_width="256dp"
             android:layout_height="256dp" />
+
+        <ImageView
+            android:id="@+id/avatar"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:contentDescription="@string/avatar"
+            android:scaleType="fitXY"
+            tools:srcCompat="@drawable/ic_launcher_foreground" />
+
     </LinearLayout>
 
 </LinearLayout>
