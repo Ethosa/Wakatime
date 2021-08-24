@@ -5,6 +5,8 @@ import android.util.Log;
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
 import com.ethosa.wakatime.models.WakatimeStats;
 
+import java.util.HashMap;
+
 public class APICallbackStats implements APICallback<WakatimeStats> {
     final private ActivityMainBinding binding;
     private MainActivity activity;
@@ -19,6 +21,11 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
     @Override
     public void onSuccessful(WakatimeStats value) {
         api.loadUserPhoto(new APICallbackBitmap(activity, binding, api));
+        activity.runOnUiThread(() -> {
+            HashMap<String, Number> data = new HashMap<>();
+            value.data.languages.forEach(elem -> data.put(elem.name, elem.total_seconds));
+            binding.chartLanguages.setData(data);
+        });
     }
 
     @Override

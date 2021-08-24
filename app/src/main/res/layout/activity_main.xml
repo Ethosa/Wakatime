@@ -68,45 +68,87 @@
             tools:ignore="TextContrastCheck" />
     </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/content"
+    <ScrollView
+        android:id="@+id/scroll_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:id="@+id/user_info"
+            android:id="@+id/content"
             android:layout_width="match_parent"
-            android:layout_height="64dp"
-            android:clipToPadding="false"
-            android:orientation="horizontal"
-            android:padding="16dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
 
-            <ImageView
-                android:id="@+id/avatar"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                android:contentDescription="@string/avatar"
-                android:scaleType="fitXY"
-                tools:srcCompat="@drawable/ic_launcher_foreground" />
+            <LinearLayout
+                android:id="@+id/user_info"
+                android:layout_width="match_parent"
+                android:layout_height="64dp"
+                android:layout_margin="8dp"
+                android:background="@drawable/card"
+                android:clipToPadding="false"
+                android:elevation="4dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:padding="16dp">
 
-            <TextView
-                android:id="@+id/username"
-                android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:contentDescription="@string/avatar"
+                    android:scaleType="fitXY"
+                    tools:srcCompat="@drawable/ic_launcher_foreground" />
+
+                <TextView
+                    android:id="@+id/username"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="1"
+                    android:text="@string/app_name"
+                    android:textAlignment="textStart"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/user_languages"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_weight="1"
-                android:text="@string/app_name"
-                android:textColor="@color/white" />
+                android:layout_margin="8dp"
+                android:background="@drawable/card"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/languages_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/languages"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/languages_chart_hold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ethosa.wakatime.PieChart
+                        android:id="@+id/chart_languages"
+                        android:layout_width="match_parent"
+                        android:layout_height="225dp"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+            </LinearLayout>
+
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/user_languages"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

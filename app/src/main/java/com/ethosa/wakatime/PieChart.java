@@ -8,6 +8,7 @@ import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 
@@ -45,16 +46,26 @@ public class PieChart extends View {
         if (data == null) {
             return;
         }
-        super.onDraw(canvas);
-        final float ratio = (getWidth()/getHeight())*(getWidth()+getHeight())/2;
+        final float size = Math.min(getWidth(), getHeight());
+        final float rectSpace = 5f;
+        final float rectSize = 32f;
         float currentAngle = 0f;
+        float i = 0;
 
-        for(Number val : data.values()) {
-            final float angle = maxAngle*((float)val / maxValue);
+        for(Map.Entry<String, Number> val : data.entrySet()) {
+            final float angle = maxAngle*((float)val.getValue() / maxValue);
             generateColor();
-            canvas.drawArc(0f, 0f, ratio, ratio,   // View box
+            canvas.drawArc(0f, 0f, size, size,   // View box
                            currentAngle, angle, true, paint);
+            canvas.drawRoundRect(
+                    size + 32f, i*rectSize + rectSpace,
+                    size + 32f + rectSize, i*rectSize + rectSize,
+                    4f, 4f, paint);
+            paint.setColor(Color.rgb(235, 235, 235));
+            paint.setTextSize(rectSize);
+            canvas.drawText(val.getKey(), size+32f+rectSize+rectSpace, i*rectSize + rectSize, paint);
             currentAngle += angle + space;
+            ++i;
         }
     }
 
