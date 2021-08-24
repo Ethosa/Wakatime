@@ -11,4 +11,4 @@
 
 | Emulator | Phone |
 | :---:    | :---: |
-|<img src="https://github.com/Ethosa/Wakatime/blob/master/screenshots/one.png" alt="Emulator" width="300px">|<img src="https://github.com/Ethosa/Wakatime/blob/master/screenshots/two.jpg" alt="Phone" width="300px">|
+|<img src="https://github.com/Ethosa/Wakatime/blob/master/screenshots/one.png" alt="Emulator" width="350px">|<img src="https://github.com/Ethosa/Wakatime/blob/master/screenshots/two.jpg" alt="Phone" width="350px">|
