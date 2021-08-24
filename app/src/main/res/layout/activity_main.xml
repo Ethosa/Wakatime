@@ -75,18 +75,37 @@
         android:orientation="vertical"
         android:visibility="visible">
 
-        <com.ethosa.wakatime.PieChart
-            android:id="@+id/pie"
-            android:layout_width="256dp"
-            android:layout_height="256dp" />
+        <LinearLayout
+            android:id="@+id/user_info"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/avatar"
-            android:layout_width="128dp"
-            android:layout_height="128dp"
-            android:contentDescription="@string/avatar"
-            android:scaleType="fitXY"
-            tools:srcCompat="@drawable/ic_launcher_foreground" />
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:contentDescription="@string/avatar"
+                android:scaleType="fitXY"
+                tools:srcCompat="@drawable/ic_launcher_foreground" />
+
+            <TextView
+                android:id="@+id/username"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_weight="1"
+                android:text="@string/app_name"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_languages"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"></LinearLayout>
 
     </LinearLayout>
 
