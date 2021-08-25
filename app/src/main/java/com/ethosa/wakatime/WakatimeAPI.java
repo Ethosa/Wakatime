@@ -2,6 +2,11 @@ package com.ethosa.wakatime;
 
 import android.graphics.BitmapFactory;
 
+import com.ethosa.wakatime.models.WakatimeStats;
+import com.ethosa.wakatime.models.WakatimeUser;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
@@ -11,10 +16,6 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import com.ethosa.wakatime.models.WakatimeStats;
-import com.ethosa.wakatime.models.WakatimeUser;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 
 public class WakatimeAPI {
@@ -29,6 +30,10 @@ public class WakatimeAPI {
         client = new OkHttpClient();
     }
 
+    /**
+     * Gets user statistics.
+     * @param apiKey is Wakatime API key.
+     */
     public void getStats(String apiKey, APICallbackStats callback) {
         loadUserInfo(apiKey);
         Request request = new Request.Builder()
@@ -53,6 +58,9 @@ public class WakatimeAPI {
         });
     }
 
+    /**
+     * Gets information about the user.
+     */
     public void loadUserInfo(String apiKey) {
         Request request = new Request.Builder()
                 .url(URL + "users/current?api_key=" + apiKey)
@@ -75,6 +83,9 @@ public class WakatimeAPI {
         });
     }
 
+    /**
+     * Gets a profile photo.
+     */
     public void loadUserPhoto(APICallbackBitmap callback) {
         Request request = new Request.Builder()
                 .url(userInfo.data.photo)

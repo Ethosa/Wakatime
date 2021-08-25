@@ -1,12 +1,13 @@
 package com.ethosa.wakatime;
 
 import android.graphics.Point;
-import android.util.Log;
 
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
+import com.ethosa.wakatime.models.WakatimeObject;
 import com.ethosa.wakatime.models.WakatimeStats;
 
 import java.util.HashMap;
+import java.util.List;
 
 public class APICallbackStats implements APICallback<WakatimeStats> {
     final private ActivityMainBinding binding;
@@ -21,33 +22,27 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
 
     @Override
     public void onSuccessful(WakatimeStats value) {
+        // Get the user's profile photo.
+        // After downloading the photo, the loading screen will be removed.
         api.loadUserPhoto(new APICallbackBitmap(activity, binding, api));
+
+        // Displaying user statistics.
         activity.runOnUiThread(() -> {
             final Point windowSize = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(windowSize);
             final float minSide = Math.min((float)windowSize.x, (float)windowSize.y);
             final float maxSide = Math.max((float)windowSize.x, (float)windowSize.y);
 
-            HashMap<String, Number> languages = new HashMap<>();
-            HashMap<String, Number> editors = new HashMap<>();
-            HashMap<String, Number> operatingSystems = new HashMap<>();
-
-            value.data.languages.forEach(elem -> languages.put(elem.name, elem.total_seconds));
-            value.data.editors.forEach(elem -> editors.put(elem.name, elem.total_seconds));
-            value.data.operating_systems.forEach(elem -> operatingSystems.put(elem.name, elem.total_seconds));
-
-            binding.chartLanguages.resize(0, (int)(maxSide/3.2f));
-            binding.chartEditors.resize(0, (int)(maxSide/3.2f));
-            binding.chartOperatingSystems.resize(0, (int)(maxSide/3.2f));
-
-            binding.chartLanguages.setData(languages, minSide);
-            binding.chartEditors.setData(editors, minSide);
-            binding.chartOperatingSystems.setData(operatingSystems, minSide);
+            visualizeData(value.data.languages, binding.chartLanguages, minSide, maxSide);
+            visualizeData(value.data.editors, binding.chartEditors, minSide, maxSide);
+            visualizeData(value.data.operating_systems, binding.chartOperatingSystems, minSide, maxSide);
         });
     }
 
-    @Override
-    public void onFailure(Exception e) {
-        Log.e("Wakatime Api", String.valueOf(e));
+    private void visualizeData(List<WakatimeObject> obj, PieChart chart, float minSide, float maxSide) {
+        HashMap<String, Float> data = new HashMap<>();
+        obj.forEach(elem -> data.put(elem.name, elem.total_seconds));
+        chart.resize(0, (int)(maxSide/3.2f));
+        chart.setData(data, minSide);
     }
 }

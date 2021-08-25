@@ -8,18 +8,20 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 
 public class PieChart extends View {
     private final Paint paint = new Paint();
-    private HashMap<String, Number> data;
+    private HashMap<String, Float> data;
     private float space = 0.1f;
     private float maxValue = 0f;
     private float maxAngle = 0;
     private float rectSize = 32f;
+    private int[] palette = ColorPalettes.pastel;
 
     public PieChart(Context context) {
         super(context);
@@ -53,10 +55,13 @@ public class PieChart extends View {
         float currentAngle = 0f;
         float i = 0;
 
-        for(Map.Entry<String, Number> val : data.entrySet()) {
-            final float angle = maxAngle*((float)val.getValue() / maxValue);
+        List<Map.Entry<String, Float>> list = new ArrayList<>(data.entrySet());
+        list.sort(Map.Entry.comparingByValue());
+
+        for (Map.Entry<String, Float> val : list) {
+            final float angle = maxAngle*(val.getValue() / maxValue);
             // Draw chart
-            generateColor();
+            paint.setColor(palette[(int)i]);
             canvas.drawArc(0f, 0f, size, size,   // View box
                            currentAngle, angle, true, paint);
 
@@ -74,15 +79,6 @@ public class PieChart extends View {
         }
     }
 
-    private void generateColor() {
-        final Random r = new Random();
-        paint.setColor(Color.rgb(
-                r.nextInt(256) + 144,
-                r.nextInt(256) + 144,
-                r.nextInt(256) + 144
-        ));
-    }
-
     public void resize(int w, int h) {
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
         if (w > 0) {
@@ -98,14 +94,26 @@ public class PieChart extends View {
      * @param value is Wakatime parsed object.
      * @param minScreenSize is minimum screen side.
      */
-    public void setData(HashMap<String, Number> value, float minScreenSize) {
+    public void setData(HashMap<String, Float> value, float minScreenSize) {
         rectSize = minScreenSize/32f;
         maxAngle = 360f;
-        for (Number val : value.values()) {
-            maxValue += (float)val;
+        for (Float val : value.values()) {
+            maxValue += val;
             maxAngle -= space;
         }
         data = value;
+        invalidate();
+    }
+
+    /**
+     * Changes current color palette and redraws pie chart.
+     * @param value is ColorPalettes palette:
+     *              ColorPalettes.flat
+     *              ColorPalettes.rainbow
+     *              ColorPalettes.sweetFaithing
+     */
+    public void setColorPalette(int[] value) {
+        palette = value;
         invalidate();
     }
 
