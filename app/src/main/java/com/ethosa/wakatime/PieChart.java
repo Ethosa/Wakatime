@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -54,9 +55,12 @@ public class PieChart extends View {
 
         for(Map.Entry<String, Number> val : data.entrySet()) {
             final float angle = maxAngle*((float)val.getValue() / maxValue);
+            // Draw chart
             generateColor();
             canvas.drawArc(0f, 0f, size, size,   // View box
                            currentAngle, angle, true, paint);
+
+            // Draw data info
             canvas.drawRoundRect(
                     size + 32f, i*rectSize + rectSpace,
                     size + 32f + rectSize, i*rectSize + rectSize,
@@ -64,6 +68,7 @@ public class PieChart extends View {
             paint.setColor(Color.rgb(235, 235, 235));
             paint.setTextSize(rectSize);
             canvas.drawText(val.getKey(), size+32f+rectSize+rectSpace, i*rectSize + rectSize, paint);
+
             currentAngle += angle + space;
             ++i;
         }
@@ -78,8 +83,23 @@ public class PieChart extends View {
         ));
     }
 
-    public void setData(HashMap<String, Number> value, float screenWidth) {
-        rectSize = screenWidth/32f;
+    public void resize(int w, int h) {
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) getLayoutParams();
+        if (w > 0) {
+            params.width = w;
+        }
+        if (h > 0) {
+            params.height = h;
+        }
+        setLayoutParams(params);
+    }
+
+    /** Sets chart data.
+     * @param value is Wakatime parsed object.
+     * @param minScreenSize is minimum screen side.
+     */
+    public void setData(HashMap<String, Number> value, float minScreenSize) {
+        rectSize = minScreenSize/32f;
         maxAngle = 360f;
         for (Number val : value.values()) {
             maxValue += (float)val;

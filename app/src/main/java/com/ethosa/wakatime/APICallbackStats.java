@@ -25,6 +25,8 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
         activity.runOnUiThread(() -> {
             final Point windowSize = new Point();
             activity.getWindowManager().getDefaultDisplay().getSize(windowSize);
+            final float minSide = Math.min((float)windowSize.x, (float)windowSize.y);
+            final float maxSide = Math.max((float)windowSize.x, (float)windowSize.y);
 
             HashMap<String, Number> languages = new HashMap<>();
             HashMap<String, Number> editors = new HashMap<>();
@@ -34,9 +36,13 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
             value.data.editors.forEach(elem -> editors.put(elem.name, elem.total_seconds));
             value.data.operating_systems.forEach(elem -> operatingSystems.put(elem.name, elem.total_seconds));
 
-            binding.chartLanguages.setData(languages, (float)windowSize.x);
-            binding.chartEditors.setData(editors, (float)windowSize.x);
-            binding.chartOperatingSystems.setData(operatingSystems, (float)windowSize.x);
+            binding.chartLanguages.resize(0, (int)(maxSide/3.2f));
+            binding.chartEditors.resize(0, (int)(maxSide/3.2f));
+            binding.chartOperatingSystems.resize(0, (int)(maxSide/3.2f));
+
+            binding.chartLanguages.setData(languages, minSide);
+            binding.chartEditors.setData(editors, minSide);
+            binding.chartOperatingSystems.setData(operatingSystems, minSide);
         });
     }
 
