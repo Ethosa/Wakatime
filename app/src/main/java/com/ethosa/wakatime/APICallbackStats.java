@@ -36,13 +36,16 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
             visualizeData(value.data.languages, binding.chartLanguages, minSide, maxSide);
             visualizeData(value.data.editors, binding.chartEditors, minSide, maxSide);
             visualizeData(value.data.operating_systems, binding.chartOperatingSystems, minSide, maxSide);
+
+            binding.dailyAverage.setText(value.data.human_readable_daily_average_including_other_language);
+            binding.allTime.setText(value.data.human_readable_total_including_other_language);
         });
     }
 
     private void visualizeData(List<WakatimeObject> obj, PieChart chart, float minSide, float maxSide) {
         HashMap<String, Float> data = new HashMap<>();
         obj.forEach(elem -> data.put(elem.name, elem.total_seconds));
-        chart.resize(0, (int)(maxSide/3.2f));
+        chart.resize(0, (int)(maxSide/3.75f));
         chart.setData(data, minSide);
     }
 }

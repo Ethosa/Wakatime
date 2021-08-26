@@ -12,6 +12,7 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences preferences;
     private String apiKey = "";
     private WakatimeAPI api;
+    private ColorPalettes palettes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +20,10 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         preferences = getPreferences(MODE_PRIVATE);
+        palettes = new ColorPalettes(this);
         api = new WakatimeAPI();
 
+        loadPalettes();
         loadApiKey();
 
         // Saves the API key and throws the user on the screen with statistics.
@@ -45,6 +48,15 @@ public class MainActivity extends AppCompatActivity {
             binding.loadScreen.setVisibility(View.VISIBLE);
             processStats();
         }
+    }
+
+    /**
+     * Loads palette to charts.
+     */
+    private void loadPalettes() {
+        binding.chartLanguages.setColorPalette(palettes.wakatime);
+        binding.chartEditors.setColorPalette(palettes.wakatime);
+        binding.chartOperatingSystems.setColorPalette(palettes.wakatime);
     }
 
     /**

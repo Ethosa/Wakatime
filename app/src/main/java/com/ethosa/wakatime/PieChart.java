@@ -21,7 +21,7 @@ public class PieChart extends View {
     private float maxValue = 0f;
     private float maxAngle = 0;
     private float rectSize = 32f;
-    private int[] palette = ColorPalettes.pastel;
+    private HashMap<String, Integer> palette;
 
     public PieChart(Context context) {
         super(context);
@@ -61,7 +61,7 @@ public class PieChart extends View {
         for (Map.Entry<String, Float> val : list) {
             final float angle = maxAngle*(val.getValue() / maxValue);
             // Draw chart
-            paint.setColor(palette[(int)i]);
+            paint.setColor(palette.getOrDefault(val.getKey(), ColorPalettes.getRandomPastelColor()));
             canvas.drawArc(0f, 0f, size, size,   // View box
                            currentAngle, angle, true, paint);
 
@@ -108,11 +108,9 @@ public class PieChart extends View {
     /**
      * Changes current color palette and redraws pie chart.
      * @param value is ColorPalettes palette:
-     *              ColorPalettes.flat
-     *              ColorPalettes.rainbow
-     *              ColorPalettes.sweetFaithing
+     *              ColorPalettes.pastel
      */
-    public void setColorPalette(int[] value) {
+    public void setColorPalette(HashMap<String, Integer> value) {
         palette = value;
         invalidate();
     }
