@@ -8,4 +8,6 @@
     <string name="languages">Languages</string>
     <string name="editors">Editors</string>
     <string name="operating_systems">Operating systems</string>
+    <string name="daily_average">Daily average:</string>
+    <string name="last_7_days">Last 7 days</string>
 </resources>
