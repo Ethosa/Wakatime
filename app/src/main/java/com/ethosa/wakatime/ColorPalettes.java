@@ -19,6 +19,10 @@ public class ColorPalettes {
         }
     }
 
+    /**
+     * Loads colors from res/values/pastel_colors.xml
+     * @param context is Activity context.
+     */
     private void loadWakatimeColors(Context context) throws ClassNotFoundException, IllegalAccessException {
         Field[] fields = Class.forName(context.getPackageName() + ".R$color").getDeclaredFields();
         for(Field field : fields) {

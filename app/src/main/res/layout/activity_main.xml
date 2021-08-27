@@ -208,6 +208,43 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/last_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@drawable/card"
+                android:elevation="4dp"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/last_activity_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:text="@string/last_coding_activity"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="@color/white"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:id="@+id/chart_last_activity_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.ethosa.wakatime.charts.Chart
+                        android:id="@+id/chart_last_activity"
+                        android:layout_width="match_parent"
+                        android:layout_height="196dp"
+                        android:layout_margin="0dp"
+                        android:layout_weight="1" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
                 android:id="@+id/user_languages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -234,7 +271,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.ethosa.wakatime.PieChart
+                    <com.ethosa.wakatime.charts.PieChart
                         android:id="@+id/chart_languages"
                         android:layout_width="match_parent"
                         android:layout_height="196dp"
@@ -271,7 +308,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.ethosa.wakatime.PieChart
+                    <com.ethosa.wakatime.charts.PieChart
                         android:id="@+id/chart_editors"
                         android:layout_width="match_parent"
                         android:layout_height="196dp"
@@ -308,7 +345,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <com.ethosa.wakatime.PieChart
+                    <com.ethosa.wakatime.charts.PieChart
                         android:id="@+id/chart_operating_systems"
                         android:layout_width="match_parent"
                         android:layout_height="196dp"

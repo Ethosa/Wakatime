@@ -2,6 +2,7 @@ package com.ethosa.wakatime;
 
 import android.graphics.Point;
 
+import com.ethosa.wakatime.charts.PieChart;
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
 import com.ethosa.wakatime.models.WakatimeObject;
 import com.ethosa.wakatime.models.WakatimeStats;

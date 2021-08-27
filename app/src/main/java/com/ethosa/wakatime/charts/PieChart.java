@@ -1,4 +1,4 @@
-package com.ethosa.wakatime;
+package com.ethosa.wakatime.charts;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -8,7 +8,10 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.ethosa.wakatime.ColorPalettes;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,12 +19,12 @@ import java.util.Map;
 
 public class PieChart extends View {
     private final Paint paint = new Paint();
+    private HashMap<String, Integer> palette;
     private HashMap<String, Float> data;
     private float space = 0.1f;
     private float maxValue = 0f;
     private float maxAngle = 0;
     private float rectSize = 32f;
-    private HashMap<String, Integer> palette;
 
     public PieChart(Context context) {
         super(context);
@@ -56,7 +59,7 @@ public class PieChart extends View {
         float i = 0;
 
         List<Map.Entry<String, Float>> list = new ArrayList<>(data.entrySet());
-        list.sort(Map.Entry.comparingByValue());
+        list.sort(Map.Entry.comparingByValue(Comparator.reverseOrder()));
 
         for (Map.Entry<String, Float> val : list) {
             final float angle = maxAngle*(val.getValue() / maxValue);

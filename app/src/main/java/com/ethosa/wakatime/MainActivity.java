@@ -1,6 +1,7 @@
 package com.ethosa.wakatime;
 
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -64,5 +65,8 @@ public class MainActivity extends AppCompatActivity {
      */
     private void processStats() {
         api.getStats(apiKey, new APICallbackStats(this, binding, api));
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            api.getDurations(apiKey, new APICallbackDurations(this, binding, api));
+        }
     }
 }
