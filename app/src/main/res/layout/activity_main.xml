@@ -153,7 +153,7 @@
                     <TextView
                         android:id="@+id/daily_average_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:text="@string/daily_average"
                         android:textAlignment="center"
                         android:textAllCaps="true"
@@ -173,6 +173,39 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/total_day_holder"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/card"
+                    android:elevation="4dp"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/total_day_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="36dp"
+                        android:text="@string/total_day_time"
+                        android:textAlignment="center"
+                        android:textAllCaps="true"
+                        android:textColor="@color/white"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/total_day"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="32dp"
+                        android:layout_marginBottom="32dp"
+                        android:text="@string/total_day_time"
+                        android:textAlignment="center"
+                        android:textColor="@color/white" />
+
+                </LinearLayout>
+
+                <LinearLayout
                     android:id="@+id/all_time_holder"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -186,7 +219,7 @@
                     <TextView
                         android:id="@+id/all_time_title"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="36dp"
                         android:text="@string/last_7_days"
                         android:textAlignment="center"
                         android:textAllCaps="true"

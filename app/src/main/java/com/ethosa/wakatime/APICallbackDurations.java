@@ -22,6 +22,24 @@ public class APICallbackDurations implements APICallback<WakatimeDurations> {
         // Dynamic update
         activity.runOnUiThread(() -> {
             binding.chartLastActivity.setData(api.durations);
+            if (api.durations.size() == 2) {
+                binding.totalDay.setText(getTotalTime(api.durations.get(0)));
+            }
         });
+    }
+
+    /**
+     * Calculates total time today.
+     * @param durations is today durations.
+     * @return
+     */
+    private String getTotalTime(WakatimeDurations durations) {
+        float result = durations.data.stream().map(x -> x.duration).reduce(0f, Float::sum);
+        int mins = (int)(result / 60);
+        int hrs = (int)(result / 60 / 60);
+        while (mins > 60) {
+            mins -= 60;
+        }
+        return hrs + " hrs " + mins + " mins";
     }
 }

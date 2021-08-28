@@ -21,7 +21,6 @@ import java.util.Map;
 public class Chart extends View {
     private final Paint paint = new Paint();
     private ArrayList<WakatimeDurations> data;
-    private final float max_duration = 86400f;
 
     public Chart(Context context) {
         super(context);
@@ -45,40 +44,7 @@ public class Chart extends View {
         paint.setColor(Color.rgb(255, 77, 255));
     }
 
-    @Override
-    protected void onDraw(Canvas canvas) {
-        if (data == null){
-            return;
-        }
-        float width = getWidth();
-        float height = getHeight();
-        float day_width = width / 7;
-        float i = 0f;
-        HashMap<String, Integer> palette = new HashMap<>();
-        float heights[] = {0, 0, 0, 0, 0, 0, 0, 0};
-
-        for (WakatimeDurations elem : data) {
-            float current_height = 0f;
-            List<Map.Entry<String, Float>> list = sortDay(elem);
-
-            for (Map.Entry<String, Float> val : list) {
-                int clr = palette.getOrDefault(val.getKey(), ColorPalettes.getRandomPastelColor());
-                palette.put(val.getKey(), clr);
-
-                paint.setColor(Color.argb(150, Color.red(clr), Color.green(clr), Color.blue(clr)));
-                float h = val.getValue() / max_duration * height;
-                canvas.drawRect(day_width*i, height-current_height-h,
-                               day_width*i+day_width, height-current_height, paint);
-                paint.setColor(clr);
-                paint.setStyle(Paint.Style.STROKE);
-                canvas.drawRect(day_width*i, height-current_height-h,
-                        day_width*i+day_width, height-current_height, paint);
-                paint.setStyle(Paint.Style.FILL);
-                current_height += h;
-            }
-            heights[(int)i] = height - current_height;
-            i++;
-        }
+    private void drawPath(Canvas canvas, float day_width, float[] heights) {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(0xFFEFEFEF);
         Path path = new Path();
@@ -88,6 +54,50 @@ public class Chart extends View {
         }
         canvas.drawPath(path, paint);
         paint.setStyle(Paint.Style.FILL);
+    }
+
+    @Override
+    protected void onDraw(Canvas canvas) {
+        if (data == null){
+            return;
+        }
+        HashMap<String, Integer> palette = new HashMap<>();
+        float heights[] = {0, 0, 0, 0, 0, 0, 0, 0};
+        float i = 0f;
+        final float width = getWidth();
+        final float height = getHeight() - 48f;
+        final float day_width = width / 7;
+        final float max_duration = 86400f;
+
+        for (WakatimeDurations elem : data) {
+            float current_height = 0f;
+            List<Map.Entry<String, Float>> list = sortDay(elem);
+
+            // Draw rectangles
+            for (Map.Entry<String, Float> val : list) {
+                int clr = palette.getOrDefault(val.getKey(), ColorPalettes.getRandomPastelColor());
+                if (!palette.containsKey(val.getKey())){
+                    palette.put(val.getKey(), clr);
+                }
+
+                paint.setStyle(Paint.Style.FILL_AND_STROKE);
+                paint.setColor(getColorWithAlpha(clr, 175));
+                float h = val.getValue() / max_duration * height;
+                canvas.drawRect(day_width*i, height-current_height-h,
+                               day_width*i+day_width, height-current_height, paint);
+                paint.setStyle(Paint.Style.FILL);
+                current_height += h;
+            }
+
+            // Draw day
+            paint.setColor(0xA0EFEFEF);
+            paint.setTextSize(day_width/6);
+            canvas.drawText(elem.end.substring(0, 10), day_width*i, height+48f, paint);
+
+            heights[(int)i] = height - current_height;
+            i++;
+        }
+        drawPath(canvas, day_width, heights);
     }
 
     private List<Map.Entry<String, Float>> sortDay(WakatimeDurations elem) {
@@ -104,6 +114,16 @@ public class Chart extends View {
         List<Map.Entry<String, Float>> list = new ArrayList<>(values.entrySet());
         list.sort(Map.Entry.comparingByValue());
         return list;
+    }
+
+    /**
+     * Changes Color alpha and return it.
+     * @param color is source color.
+     * @param alpha is alpha value in [0..255].
+     * @return is color with alpha.
+     */
+    private int getColorWithAlpha(int color, int alpha) {
+        return Color.argb(alpha, Color.red(color), Color.green(color), Color.blue(color));
     }
 
     /** Sets chart data.
