@@ -44,6 +44,9 @@ public class Chart extends View {
         paint.setColor(Color.rgb(255, 77, 255));
     }
 
+    /**
+     * Draws days duration path.
+     */
     private void drawPath(Canvas canvas, float day_width, float[] heights) {
         paint.setStyle(Paint.Style.STROKE);
         paint.setColor(0xFFEFEFEF);
@@ -100,6 +103,9 @@ public class Chart extends View {
         drawPath(canvas, day_width, heights);
     }
 
+    /**
+     * Sorts day durations and returns it.
+     */
     private List<Map.Entry<String, Float>> sortDay(WakatimeDurations elem) {
         HashMap<String, Float> values = new HashMap<>();
         for (WakatimeDuration project: elem.data) {

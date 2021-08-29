@@ -113,6 +113,9 @@ public class WakatimeAPI {
         });
     }
 
+    /**
+     * Gets day durations. Uses for get last week durations.
+     */
     @RequiresApi(api = Build.VERSION_CODES.O)
     public void getDurations(String apiKey, APICallbackDurations callback) {
         Instant now = Instant.now().minus(durations.size()-1, ChronoUnit.DAYS);

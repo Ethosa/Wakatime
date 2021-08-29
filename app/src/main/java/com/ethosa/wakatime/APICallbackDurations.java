@@ -1,7 +1,5 @@
 package com.ethosa.wakatime;
 
-import android.util.Log;
-
 import com.ethosa.wakatime.databinding.ActivityMainBinding;
 import com.ethosa.wakatime.models.WakatimeDurations;
 
@@ -18,7 +16,6 @@ public class APICallbackDurations implements APICallback<WakatimeDurations> {
 
     @Override
     public void onSuccessful(WakatimeDurations value) {
-        Log.i("Wakatime API", value.start);
         // Dynamic update
         activity.runOnUiThread(() -> {
             binding.chartLastActivity.setData(api.durations);
@@ -31,7 +28,7 @@ public class APICallbackDurations implements APICallback<WakatimeDurations> {
     /**
      * Calculates total time today.
      * @param durations is today durations.
-     * @return
+     * @return String with format "00 hrs 00 mins".
      */
     private String getTotalTime(WakatimeDurations durations) {
         float result = durations.data.stream().map(x -> x.duration).reduce(0f, Float::sum);
