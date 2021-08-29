@@ -14,11 +14,17 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
     final private ActivityMainBinding binding;
     private MainActivity activity;
     private WakatimeAPI api;
+    private final float minSide;
+    private final float maxSide;
 
     public APICallbackStats(MainActivity ctx, ActivityMainBinding value, WakatimeAPI apiObj){
         binding = value;
         activity = ctx;
         api = apiObj;
+        final Point windowSize = new Point();
+        activity.getWindowManager().getDefaultDisplay().getSize(windowSize);
+        minSide = Math.min((float)windowSize.x, (float)windowSize.y);
+        maxSide = Math.max((float)windowSize.x, (float)windowSize.y);
     }
 
     @Override
@@ -29,21 +35,21 @@ public class APICallbackStats implements APICallback<WakatimeStats> {
 
         // Displaying user statistics.
         activity.runOnUiThread(() -> {
-            final Point windowSize = new Point();
-            activity.getWindowManager().getDefaultDisplay().getSize(windowSize);
-            final float minSide = Math.min((float)windowSize.x, (float)windowSize.y);
-            final float maxSide = Math.max((float)windowSize.x, (float)windowSize.y);
-
-            visualizeData(value.data.languages, binding.chartLanguages, minSide, maxSide);
-            visualizeData(value.data.editors, binding.chartEditors, minSide, maxSide);
-            visualizeData(value.data.operating_systems, binding.chartOperatingSystems, minSide, maxSide);
+            visualizeData(value.data.languages, binding.chartLanguages);
+            visualizeData(value.data.editors, binding.chartEditors);
+            visualizeData(value.data.operating_systems, binding.chartOperatingSystems);
 
             binding.dailyAverage.setText(value.data.human_readable_daily_average_including_other_language);
             binding.allTime.setText(value.data.human_readable_total_including_other_language);
         });
     }
 
-    private void visualizeData(List<WakatimeObject> obj, PieChart chart, float minSide, float maxSide) {
+    /**
+     * Visualizes WakatimeObject in PieChart.
+     * @param obj is List of WakatimeObjects.
+     * @param chart is target pie chart in activity.
+     */
+    private void visualizeData(List<WakatimeObject> obj, PieChart chart) {
         HashMap<String, Float> data = new HashMap<>();
         obj.forEach(elem -> data.put(elem.name, elem.total_seconds));
         chart.resize(0, (int)(maxSide/3.75f));
